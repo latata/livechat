@@ -1,0 +1,24 @@
+@mixin login-container {
+	box-shadow: 0 0 #0000, 0 0 #0000, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	padding: 0.75rem;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+
+	@media (min-width: 640px) {
+		width: 600px;
+	}
+}
+
+@mixin login-button($background-color, $text-color) {
+	border-radius: 0.25rem;
+	padding: 0.5rem 1rem;
+	background-color: $background-color;
+	color: $text-color;
+	margin-bottom: 0.5rem;
+	border: 0;
+
+	&:active, &:focus {
+		background-color: darken($background-color, 5%);
+	}
+}

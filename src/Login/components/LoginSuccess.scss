@@ -1,0 +1,10 @@
+@import '../../mixins';
+
+.login-success {
+	@include login-container();
+
+	&__logout {
+		@include login-button(#f87171, #fff);
+		margin-left: 20px;
+	}
+}

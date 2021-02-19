@@ -1,8 +1,13 @@
+import 'react-app-polyfill/ie9';
+import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
+// this file mocks `fetch` and simulates the server
+import './serverMock';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+import './index.scss';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -10,8 +15,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
