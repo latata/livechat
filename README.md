@@ -6,6 +6,11 @@ Use `yarn` or `npm install` to install all dependencies.
 `yarn start` or `npm start` to run the app\
 `yarn test` to run unit/integration tests\
 
+### IE 10
+To run the app in IE10, set env variable `FAST_REFRESH=false` to disable `@pmmmwh/react-refresh-webpack-plugin` 
+hot reloading package which is not prepared to working with older browser
+`FAST_REFRESH=false yarn start`
+
 ## Project structure
 * `public` - public files
 * `src` - source
