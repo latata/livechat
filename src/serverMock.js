@@ -43,7 +43,7 @@ function mockedRequestLogin({ email, password }) {
           return Promise.resolve(body);
         },
       });
-    }, 200);
+    }, 400);
   });
 }
 

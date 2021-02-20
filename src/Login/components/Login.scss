@@ -2,6 +2,7 @@
 
 .login-form {
   @include login-container();
+  position: relative;
 
   &__label {
     margin-bottom: 0.25rem;
@@ -36,5 +37,17 @@
     background-color: #f87171;
     color: #fff;
     margin-bottom: 0.5rem;
+  }
+
+  &__status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(#fff, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

@@ -6,6 +6,7 @@ import {
   NETWORK_ERROR,
 } from "../utils/LoginMessages";
 import { login } from "../utils/LoginApi";
+import Spinner from "../../Spinner";
 
 import "./Login.scss";
 
@@ -15,6 +16,7 @@ function Login({ onSuccess }) {
     password: "",
   });
   const [errorMessages, setErrorMessages] = useState([]);
+  const [isInProgress, setIsInProgress] = useState(false);
 
   const submit = async (event) => {
     event.preventDefault();
@@ -30,6 +32,8 @@ function Login({ onSuccess }) {
     setErrorMessages(newErrorMessages);
 
     if (!newErrorMessages.length) {
+      setIsInProgress(true);
+
       try {
         const data = await login(credentials);
 
@@ -39,6 +43,8 @@ function Login({ onSuccess }) {
       } catch (e) {
         setErrorMessages([NETWORK_ERROR]);
       }
+
+      setIsInProgress(false);
     }
   };
 
@@ -86,11 +92,20 @@ function Login({ onSuccess }) {
               {errorMessage}
             </div>
           ))}
-          <button type="submit" className="login-form__submit">
+          <button
+            type="submit"
+            className="login-form__submit"
+            disabled={isInProgress}
+          >
             Login
           </button>
         </div>
       </fieldset>
+      {isInProgress && (
+        <div className="login-form__status">
+          <Spinner />
+        </div>
+      )}
     </form>
   );
 }
