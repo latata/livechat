@@ -102,7 +102,10 @@ function Login({ onSuccess }) {
         </div>
       </fieldset>
       {isInProgress && (
-        <div className="login-form__status">
+        <div
+          className="login-form__loading-indicator"
+          data-testid="loading-indicator"
+        >
           <Spinner />
         </div>
       )}

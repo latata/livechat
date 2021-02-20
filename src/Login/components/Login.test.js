@@ -5,7 +5,7 @@ import {
   EMAIL_OR_PASSWORD_INVALID,
   NETWORK_ERROR,
 } from "../utils/LoginMessages";
-import { render, fireEvent, act } from "@testing-library/react";
+import { render, fireEvent, act, waitFor } from "@testing-library/react";
 import { login } from "../utils/LoginApi";
 
 jest.mock("../utils/LoginApi");
@@ -154,8 +154,52 @@ describe("Login component", () => {
       changePassword("Val1dPa55word");
     });
 
-    await submitForm();
+    await act(async () => {
+      await submitForm();
+    });
 
+    expect(onSuccess).toBeCalled();
+  });
+
+  test("shows loading indicator and disabled submit button when logging in", async () => {
+    let resolveLoginPromise;
+    const promise = new Promise((resolve) => {
+      resolveLoginPromise = resolve;
+    });
+    login.mockImplementation(async () => {
+      await promise;
+      return;
+    });
+    const {
+      events: { changeEmail, changePassword, submitForm },
+      elements: { submit },
+      onSuccess,
+      queryByTestId,
+    } = setup();
+
+    act(() => {
+      changeEmail("valid@email.pl");
+    });
+
+    act(() => {
+      changePassword("Val1dPa55word");
+    });
+
+    expect(submit).toBeEnabled();
+    expect(queryByTestId("loading-indicator")).toBeFalsy();
+
+    act(() => {
+      submitForm();
+    });
+
+    expect(submit).toBeDisabled();
+    expect(queryByTestId("loading-indicator")).toBeTruthy();
+
+    resolveLoginPromise();
+
+    await waitFor(() => expect(submit).toBeEnabled());
+
+    expect(queryByTestId("loading-indicator")).toBeFalsy();
     expect(onSuccess).toBeCalled();
   });
 });
