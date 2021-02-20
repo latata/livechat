@@ -1,9 +1,9 @@
-import { validateEmail, validatePassword } from './Login/LoginValidatation';
+import { validateEmail, validatePassword } from './Login/utils/LoginValidatation';
 import {
   EMAIL_INVALID,
   EMAIL_OR_PASSWORD_INVALID,
   PASSWORD_INVALID
-} from './Login/LoginMessages';
+} from './Login/utils/LoginMessages';
 
 function mockedRequestLogin({ email, password }) {
   return new Promise((resolve) => {

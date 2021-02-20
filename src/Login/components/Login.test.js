@@ -4,11 +4,11 @@ import {
   EMAIL_INVALID,
   EMAIL_OR_PASSWORD_INVALID,
   NETWORK_ERROR
-} from '../LoginMessages';
+} from '../utils/LoginMessages';
 import { render, fireEvent, act } from '@testing-library/react';
-import { login } from '../LoginApi';
+import { login } from '../utils/LoginApi';
 
-jest.mock('../LoginApi');
+jest.mock('../utils/LoginApi');
 
 function setup() {
   const onSuccess = jest.fn()

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { validatePassword, validateEmail } from '../LoginValidatation';
-import { EMAIL_INVALID, PASSWORD_INVALID, NETWORK_ERROR } from '../LoginMessages';
-import {login} from '../LoginApi';
+import { validatePassword, validateEmail } from '../utils/LoginValidatation';
+import { EMAIL_INVALID, PASSWORD_INVALID, NETWORK_ERROR } from '../utils/LoginMessages';
+import {login} from '../utils/LoginApi';
 
 import './Login.scss';
 

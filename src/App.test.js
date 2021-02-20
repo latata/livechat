@@ -28,6 +28,4 @@ describe('App', () => {
     expect(queryByText('Login')).toBeTruthy();
     expect(global.window.localStorage.getItem(LOGGED_IN_KEY)).toBe(null);
   });
-
-
 })
