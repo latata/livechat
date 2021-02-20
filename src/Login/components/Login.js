@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import { validatePassword, validateEmail } from '../utils/LoginValidatation';
-import { EMAIL_INVALID, PASSWORD_INVALID, NETWORK_ERROR } from '../utils/LoginMessages';
-import {login} from '../utils/LoginApi';
+import React, { useState } from "react";
+import { validatePassword, validateEmail } from "../utils/LoginValidatation";
+import {
+  EMAIL_INVALID,
+  PASSWORD_INVALID,
+  NETWORK_ERROR,
+} from "../utils/LoginMessages";
+import { login } from "../utils/LoginApi";
 
-import './Login.scss';
+import "./Login.scss";
 
 function Login({ onSuccess }) {
   const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [errorMessages, setErrorMessages] = useState([]);
 
@@ -16,11 +20,11 @@ function Login({ onSuccess }) {
     event.preventDefault();
     const newErrorMessages = [];
     if (!validateEmail(credentials.email)) {
-      newErrorMessages.push(EMAIL_INVALID)
+      newErrorMessages.push(EMAIL_INVALID);
     }
 
     if (!validatePassword(credentials.password)) {
-      newErrorMessages.push(PASSWORD_INVALID)
+      newErrorMessages.push(PASSWORD_INVALID);
     }
 
     setErrorMessages(newErrorMessages);
@@ -29,10 +33,9 @@ function Login({ onSuccess }) {
       try {
         const data = await login(credentials);
 
-        if(data?.errors) {
+        if (data?.errors) {
           setErrorMessages(data.errors);
-        } else
-        onSuccess();
+        } else onSuccess();
       } catch (e) {
         setErrorMessages([NETWORK_ERROR]);
       }
@@ -43,18 +46,34 @@ function Login({ onSuccess }) {
     <form method="POST" action="" className="login-form" onSubmit={submit}>
       <fieldset>
         <div className="login-form__input-wrapper">
-          <label htmlFor="email" className="login-form__label">Email:</label>
-          <input type="text" name="email" id="email" value={credentials.email}
-                 className="login-form__input" onChange={({ target }) => {
-            setCredentials({ ...credentials, email: target.value });
-          }} />
+          <label htmlFor="email" className="login-form__label">
+            Email:
+          </label>
+          <input
+            type="text"
+            name="email"
+            id="email"
+            value={credentials.email}
+            className="login-form__input"
+            onChange={({ target }) => {
+              setCredentials({ ...credentials, email: target.value });
+            }}
+          />
         </div>
         <div className="login-form__input-wrapper">
-          <label htmlFor="password" className="login-form__label">Password:</label>
-          <input type="password" name="password" value={credentials.password} id="password"
-                 className="login-form__input" onChange={({ target }) => {
-            setCredentials({ ...credentials, password: target.value });
-          }} />
+          <label htmlFor="password" className="login-form__label">
+            Password:
+          </label>
+          <input
+            type="password"
+            name="password"
+            value={credentials.password}
+            id="password"
+            className="login-form__input"
+            onChange={({ target }) => {
+              setCredentials({ ...credentials, password: target.value });
+            }}
+          />
         </div>
         <div className="login-form__input-wrapper">
           <label htmlFor="remember">
@@ -62,11 +81,14 @@ function Login({ onSuccess }) {
           </label>
         </div>
         <div className="login-form__submit-wrapper">
-          {errorMessages.map((errorMessage) => <div
-            className="login-form__error-message"
-            key={errorMessage}>{errorMessage}</div>)}
-          <button type="submit"
-                  className="login-form__submit">Login</button>
+          {errorMessages.map((errorMessage) => (
+            <div className="login-form__error-message" key={errorMessage}>
+              {errorMessage}
+            </div>
+          ))}
+          <button type="submit" className="login-form__submit">
+            Login
+          </button>
         </div>
       </fieldset>
     </form>
@@ -74,4 +96,3 @@ function Login({ onSuccess }) {
 }
 
 export default Login;
-

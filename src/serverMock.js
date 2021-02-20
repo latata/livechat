@@ -1,16 +1,19 @@
-import { validateEmail, validatePassword } from './Login/utils/LoginValidatation';
+import {
+  validateEmail,
+  validatePassword,
+} from "./Login/utils/LoginValidatation";
 import {
   EMAIL_INVALID,
   EMAIL_OR_PASSWORD_INVALID,
-  PASSWORD_INVALID
-} from './Login/utils/LoginMessages';
+  PASSWORD_INVALID,
+} from "./Login/utils/LoginMessages";
 
 function mockedRequestLogin({ email, password }) {
   return new Promise((resolve) => {
     // simulate server response delay with setTimeout
     setTimeout(() => {
       let status = 0;
-      let body = '';
+      let body = "";
 
       const errorMessages = [];
       if (!validateEmail(email)) {
@@ -20,11 +23,11 @@ function mockedRequestLogin({ email, password }) {
         errorMessages.push(PASSWORD_INVALID);
       }
 
-      if(errorMessages.length) {
+      if (errorMessages.length) {
         body = errorMessages;
         status = 400;
       } else {
-        if (email === 'test@test.pl' && password === 'Password1') {
+        if (email === "test@test.pl" && password === "Password1") {
           status = 200;
         } else {
           status = 401;
@@ -38,7 +41,7 @@ function mockedRequestLogin({ email, password }) {
         ok: status >= 200 && status < 300,
         json() {
           return Promise.resolve(body);
-        }
+        },
       });
     }, 200);
   });
@@ -47,8 +50,8 @@ function mockedRequestLogin({ email, password }) {
 const originalFetch = window.fetch;
 // mock http request handling
 window.fetch = (resource, init) => {
-  if(resource === '/login') {
+  if (resource === "/login") {
     return mockedRequestLogin(JSON.parse(init.body));
   }
   return originalFetch(resource, init);
-}
+};

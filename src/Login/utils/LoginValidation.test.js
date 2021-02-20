@@ -1,71 +1,74 @@
-import {validatePassword, validateEmail} from './LoginValidatation';
+import { validatePassword, validateEmail } from "./LoginValidatation";
 
 const passwordTestCases = [
   {
-    password: '',
+    password: "",
     isValid: false,
   },
   {
-    password: 'a',
+    password: "a",
     isValid: false,
   },
   {
-    password: 'testPassword',
+    password: "testPassword",
     isValid: false,
   },
   {
-    password: 'StrongPa55word',
+    password: "StrongPa55word",
     isValid: true,
   },
   {
-    password: 'Ultr@StrongPa55word',
+    password: "Ultr@StrongPa55word",
     isValid: true,
   },
   {
-    password: 'Sh0rt',
+    password: "Sh0rt",
     isValid: false,
-  }
+  },
 ];
 
-describe.each(passwordTestCases)('validatePassword', ({ password, isValid }) => {
-  test(password, () => {
-    expect(validatePassword(password)).toBe(isValid);
-  })
-});
+describe.each(passwordTestCases)(
+  "validatePassword",
+  ({ password, isValid }) => {
+    test(password, () => {
+      expect(validatePassword(password)).toBe(isValid);
+    });
+  }
+);
 
 const emailTestCases = [
   {
-    email: '',
+    email: "",
     isValid: false,
   },
   {
-    email: 'a@a',
+    email: "a@a",
     isValid: false,
   },
   {
-    email: 'valid@email.com',
+    email: "valid@email.com",
     isValid: true,
   },
   {
-    email: 'valid.email.with.dots@email.com',
+    email: "valid.email.with.dots@email.com",
     isValid: true,
   },
   {
-    email: 'valid-email-with-dash@email.com',
+    email: "valid-email-with-dash@email.com",
     isValid: true,
   },
   {
-    email: 'not.valid@email',
+    email: "not.valid@email",
     isValid: false,
   },
   {
-    email: 'another@not@valid.email',
+    email: "another@not@valid.email",
     isValid: false,
-  }
+  },
 ];
 
-describe.each(emailTestCases)('validateEmail', ({ email, isValid }) => {
+describe.each(emailTestCases)("validateEmail", ({ email, isValid }) => {
   test(email, () => {
     expect(validateEmail(email)).toBe(isValid);
-  })
+  });
 });

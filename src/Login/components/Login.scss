@@ -1,42 +1,40 @@
-@import '../../mixins';
+@import "../../mixins";
 
 .login-form {
-	@include login-container();
+  @include login-container();
 
-	&__label {
-		margin-bottom: 0.25rem;
-		display: block;
-	}
+  &__label {
+    margin-bottom: 0.25rem;
+    display: block;
+  }
 
-	&__input {
-		padding: 0.5rem 0.25rem;
-		border-radius: 0.25rem;
-		width: 100%;
-		display: block;
-		font-size: 1rem;
-		border: 1px solid #e5e7eb;
-	}
+  &__input {
+    padding: 0.5rem 0.25rem;
+    border-radius: 0.25rem;
+    width: 100%;
+    display: block;
+    font-size: 1rem;
+    border: 1px solid #e5e7eb;
+  }
 
-	&__input-wrapper {
-		margin-bottom: 0.5rem;
-	}
+  &__input-wrapper {
+    margin-bottom: 0.5rem;
+  }
 
-	&__submit-wrapper {
-		margin-bottom: 0.25rem;
-		text-align: center;
-	}
+  &__submit-wrapper {
+    margin-bottom: 0.25rem;
+    text-align: center;
+  }
 
-	&__submit {
-		@include login-button(#059669, #fff);
-	}
+  &__submit {
+    @include login-button(#059669, #fff);
+  }
 
-	&__error-message {
-		border-radius: 0.25rem;
-		padding: 0.5rem 0.25rem;
-		background-color: #f87171;
-		color: #fff;
-		margin-bottom: 0.5rem;
-	}
+  &__error-message {
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.25rem;
+    background-color: #f87171;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
 }
-
-

@@ -1,24 +1,24 @@
-import Login from './Login';
+import Login from "./Login";
 import {
   PASSWORD_INVALID,
   EMAIL_INVALID,
   EMAIL_OR_PASSWORD_INVALID,
-  NETWORK_ERROR
-} from '../utils/LoginMessages';
-import { render, fireEvent, act } from '@testing-library/react';
-import { login } from '../utils/LoginApi';
+  NETWORK_ERROR,
+} from "../utils/LoginMessages";
+import { render, fireEvent, act } from "@testing-library/react";
+import { login } from "../utils/LoginApi";
 
-jest.mock('../utils/LoginApi');
+jest.mock("../utils/LoginApi");
 
 function setup() {
-  const onSuccess = jest.fn()
+  const onSuccess = jest.fn();
   const result = render(<Login onSuccess={onSuccess} />);
 
   const elements = {
-    emailInput: result.queryByLabelText('Email:'),
-    passwordInput: result.queryByLabelText('Password:'),
-    rememberMeCheckbox: result.queryByLabelText('Remember me'),
-    submit: result.queryByText('Login'),
+    emailInput: result.queryByLabelText("Email:"),
+    passwordInput: result.queryByLabelText("Password:"),
+    rememberMeCheckbox: result.queryByLabelText("Remember me"),
+    submit: result.queryByText("Login"),
   };
 
   const events = {
@@ -30,7 +30,7 @@ function setup() {
     },
     submitForm() {
       return fireEvent.click(elements.submit);
-    }
+    },
   };
 
   return {
@@ -43,64 +43,70 @@ function setup() {
 
 afterEach(() => {
   login.mockReset();
-})
+});
 
-describe('Login component', () => {
-  test('renders', () => {
-    const { elements: { emailInput, passwordInput, rememberMeCheckbox, submit } } = setup();
+describe("Login component", () => {
+  test("renders", () => {
+    const {
+      elements: { emailInput, passwordInput, rememberMeCheckbox, submit },
+    } = setup();
     expect(emailInput).toBeTruthy();
     expect(passwordInput).toBeTruthy();
     expect(rememberMeCheckbox).toBeTruthy();
     expect(submit).toBeTruthy();
   });
 
-  test('show/hide error message when email is invalid', () => {
-    const { elements: { emailInput }, events: { changeEmail, submitForm }, queryByText } = setup();
+  test("show/hide error message when email is invalid", () => {
+    const {
+      elements: { emailInput },
+      events: { changeEmail, submitForm },
+      queryByText,
+    } = setup();
 
-    changeEmail('invalid-email');
-    expect(emailInput.value).toBe('invalid-email');
+    changeEmail("invalid-email");
+    expect(emailInput.value).toBe("invalid-email");
     submitForm();
     expect(queryByText(EMAIL_INVALID)).toBeTruthy();
-    changeEmail('valid@email.pl');
+    changeEmail("valid@email.pl");
     submitForm();
     expect(queryByText(EMAIL_INVALID)).toBeFalsy();
   });
 
-  test('show/hide error message when password is invalid', () => {
+  test("show/hide error message when password is invalid", () => {
     const {
       elements: { passwordInput },
       events: { changePassword, submitForm },
-      queryByText
+      queryByText,
     } = setup();
 
-    changePassword('invalidpassword');
-    expect(passwordInput.value).toBe('invalidpassword');
+    changePassword("invalidpassword");
+    expect(passwordInput.value).toBe("invalidpassword");
 
     submitForm();
     expect(queryByText(PASSWORD_INVALID)).toBeTruthy();
 
-    changePassword('Val1dPa55word');
+    changePassword("Val1dPa55word");
     submitForm();
     expect(queryByText(PASSWORD_INVALID)).toBeFalsy();
   });
 
-  test('show error message when user passes wrong credentials', async () => {
+  test("show error message when user passes wrong credentials", async () => {
     login.mockImplementation(async () => {
       return { errors: [EMAIL_OR_PASSWORD_INVALID] };
     });
     const {
       events: { changeEmail, changePassword, submitForm },
       findByText,
-      onSuccess
+      onSuccess,
     } = setup();
 
     act(() => {
-      changeEmail('valid@email.pl')
+      changeEmail("valid@email.pl");
     });
 
     act(() => {
-      changePassword('Val1dPa55word');
-    })
+      changePassword("Val1dPa55word");
+    });
 
     submitForm();
 
@@ -109,7 +115,7 @@ describe('Login component', () => {
     expect(onSuccess).not.toBeCalled();
   });
 
-  test('show error message on network error', async () => {
+  test("show error message on network error", async () => {
     login.mockImplementation(async () => {
       throw new Error();
     });
@@ -120,12 +126,12 @@ describe('Login component', () => {
     } = setup();
 
     act(() => {
-      changeEmail('valid@email.pl');
+      changeEmail("valid@email.pl");
     });
 
     act(() => {
-      changePassword('Val1dPa55word');
-    })
+      changePassword("Val1dPa55word");
+    });
 
     submitForm();
 
@@ -134,19 +140,19 @@ describe('Login component', () => {
     expect(onSuccess).not.toBeCalled();
   });
 
-  test('calls on success when user passes correct credentials', async () => {
+  test("calls on success when user passes correct credentials", async () => {
     const {
       events: { changeEmail, changePassword, submitForm },
-      onSuccess
+      onSuccess,
     } = setup();
 
     act(() => {
-      changeEmail('valid@email.pl');
+      changeEmail("valid@email.pl");
     });
 
     act(() => {
-      changePassword('Val1dPa55word');
-    })
+      changePassword("Val1dPa55word");
+    });
 
     await submitForm();
 

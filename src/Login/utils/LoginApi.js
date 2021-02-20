@@ -1,8 +1,8 @@
 export async function login(credentials) {
-  const response = await fetch('/login', {
-    method: 'POST',
+  const response = await fetch("/login", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(credentials),
   });
